@@ -13,6 +13,11 @@ contract TodoList {
     bool completed
   );
 
+   event TaskCompleted(
+    uint id,
+    bool completed
+  );
+
   struct Task {
     uint id;
     string content;
@@ -20,6 +25,13 @@ contract TodoList {
   }
 
   mapping (uint => Task) public tasks;
+
+    function toggleCompleted(uint _id) public {
+    Task memory _task = tasks[_id];
+    _task.completed = !_task.completed;
+    tasks[_id] = _task;
+    emit TaskCompleted(_id, _task.completed);
+  }
 
   function createTask(string memory _content) public {
     taskCount++;
