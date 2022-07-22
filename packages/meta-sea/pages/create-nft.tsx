@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import { useState } from 'react';
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
@@ -15,6 +14,8 @@ export default function CreateItem() {
   const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })
   const router = useRouter()
 
+  console.log('debug', fileUrl);
+  
   async function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;
 
@@ -74,22 +75,22 @@ export default function CreateItem() {
           placeholder='Asset name'
           onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
           type="text" className="mt-8 border rounded p-4" />
+        <textarea
+          placeholder='Asset description'
+          onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
+          className="mt-2 border p-4"></textarea>
+        <input
+          placeholder='Asset price in Eth'
+          onChange={(e) => updateFormInput({ ...formInput, price: e.target.value })}
+          type="text" className="mt-8 border rounded p-2" />
+        <input type="file" name='Asset' onChange={onChange} className="my-4" />
+        {
+          fileUrl && (
+            <img src={fileUrl} alt="file url"  className="rounded" />
+          )
+        }
+        <button onClick={listNFTForSale} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">Create NFT</button>
       </div>
-      <textarea
-        placeholder='Asset description'
-        onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
-        className="mt-2"></textarea>
-      <input
-        placeholder='Asset price in Eth'
-        onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
-        type="text" className="mt-8 border rounded p-4" />
-      <input type="file" name='Asset' onChange={onChange} className="my-4" />
-      {
-        fileUrl && (
-          <Image src={fileUrl} alt="file url" width="350" className="rounded" />
-        )
-      }
-      <button onClick={listNFTForSale} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">Create NFT</button>
     </div>
   )
 
