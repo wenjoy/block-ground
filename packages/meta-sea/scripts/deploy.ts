@@ -1,13 +1,23 @@
 import { ethers } from "hardhat";
+import {writeFile} from "fs"
 
 async function main() {
-  const Lock = await ethers.getContractFactory("NFTMarketplace");
-  const lock = await Lock.deploy();
+  const NFTMarketplace = await ethers.getContractFactory("NFTMarketplace");
+  const nftMarketplace = await NFTMarketplace.deploy();
 
-  await lock.deployed();
+  await nftMarketplace.deployed();
+  console.log('nftMarketplace deployed to: ', nftMarketplace.address);
+  
+  writeFile('./config.js', `export const marketplaceAddress = ${nftMarketplace.address}`, (err) => {
+    if(err) {
+      console.error(err);
+    }
+  });
 }
 
-main().catch((error) => {
+main()
+.then(() => process.exit(0))
+.catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
