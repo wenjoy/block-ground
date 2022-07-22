@@ -6,9 +6,9 @@ import { ethers } from 'ethers';
 import { create as ipfsHttpClient } from 'ipfs-http-client';
 
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
+import { marketplaceAddress } from '../config';
 
 const client = ipfsHttpClient({ url: 'https://ipfs.infura.io:5001/api/v0' })
-const marketplaceAddress = '0x5fbdb2315678afecb367f032d93f642f64180aa3'
 
 export default function CreateItem() {
   const [fileUrl, setFileUrl] = useState('')

@@ -3,11 +3,10 @@ import axios from 'axios'
 import Web3Modal from 'web3modal'
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-
-import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
 import Image from 'next/image'
 
-const marketplaceAddress = '0x5fbdb2315678afecb367f032d93f642f64180aa3'
+import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
+import { marketplaceAddress } from '../config';
 
 const Home: NextPage = () => {
   const [nfts, setNfts] = useState<any[]>([])
