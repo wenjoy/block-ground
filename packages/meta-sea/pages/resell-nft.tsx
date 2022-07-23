@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { marketplaceAddress } from '../config';
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
-import Image from 'next/image';
 
 export default function ResellNFT() {
   const [formInput, updateFormInput] = useState({price: '', image: ''})
@@ -53,7 +52,7 @@ export default function ResellNFT() {
         onChange={e => updateFormInput({...formInput, price: e.target.value})}
         type="text"/>
         {
-          image && <Image src={image} className="rounded mt-4" alt="" />
+          image && <img src={image} className="rounded mt-4" alt="" />
         }
         <button className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg" onClick={listNFTForSale}>List NFT</button>
       </div>

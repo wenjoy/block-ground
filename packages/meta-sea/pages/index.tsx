@@ -3,7 +3,6 @@ import axios from 'axios'
 import Web3Modal from 'web3modal'
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
 import { marketplaceAddress } from '../config';
@@ -65,7 +64,7 @@ const Home: NextPage = () => {
           {
             nfts.map((nft: any, i: number) => (
               <div className='border shadow rounded-xl overflow-hidden' key={i}>
-                <Image src={nft.image} alt="image" />
+                <img src={nft.image} alt="image" />
                 <div className="p-4">
                   <p className="text-2xl font-semibold h-64">{nft.name}</p>
                   <div className='h-70 overflow-hidden'>

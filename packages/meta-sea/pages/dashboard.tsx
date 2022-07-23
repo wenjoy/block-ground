@@ -4,7 +4,6 @@ import Web3Modal from 'web3modal'
 import axios from 'axios'
 import { marketplaceAddress } from '../config';
 import  NFTMarketplace  from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
-import Image from 'next/image';
 
 export default function CreateDashboard() {
   const [nfts, setNfts] = useState<any []>([])
@@ -50,7 +49,7 @@ export default function CreateDashboard() {
       {
         nfts.map((nft, i) => (
           <div className="border shadow rounded-xl overflow-hidden" key={i}>
-            <Image src={nft.image} alt='' className='rounded' />
+            <img src={nft.image} alt='' className='rounded' />
             <div className="p-4 b-black">
               <p className="text-2xl font-bold text-white">Price - {nft.price} Eth</p>
             </div>

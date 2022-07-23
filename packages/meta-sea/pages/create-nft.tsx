@@ -14,8 +14,6 @@ export default function CreateItem() {
   const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })
   const router = useRouter()
 
-  console.log('debug', fileUrl);
-  
   async function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;
 
@@ -54,6 +52,7 @@ export default function CreateItem() {
   async function listNFTForSale() {
     const url = await uploadToIPFS()
     const web3Modal = new Web3Modal()
+    
     const connection = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
