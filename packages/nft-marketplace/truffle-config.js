@@ -29,7 +29,7 @@ module.exports = {
   /**
   * contracts_build_directory tells Truffle where to store compiled contracts
   */
-  contracts_build_directory: './build/ethereum-contracts',
+  contracts_build_directory: './client/contracts/ethereum-contracts',
 
   /**
   * contracts_directory tells Truffle where to find your contracts
