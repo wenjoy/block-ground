@@ -11,6 +11,7 @@
     "compile:ovm": "truffle compile --config truffle-config.ovm.js",
     "migrate:evm": "truffle migrate",
     "migrate:ovm": "truffle migrate --skip-dry-run --config truffle-config.ovm.js --network $npm_config_network",
+    "migrate:local": "truffle migrate",
     "test:evm": "truffle test",
     "test:ovm": "truffle test --config truffle-config.ovm.js --network $npm_config_network",
     "exec:evm": "truffle exec",
@@ -31,5 +32,8 @@
     "@eth-optimism/plugins": "^0.0.20",
     "@truffle/hdwallet-provider": "^1.6.0",
     "dotenv": "^8.2.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.7.1"
   }
 }
