@@ -5,10 +5,10 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract Marketplace is ReentryancyGuard {
+contract Marketplace is ReentrancyGuard {
   using Counters for Counters.Counter;
   Counters.Counter private _nftsSold;
-  Counters.Counter private _nftsCount;
+  Counters.Counter private _nftCount;
   uint256 public LISTING_FEE = 0.0001 ether;
   address payable private _marketOwner;
   mapping(uint256 => NFT) private _idToNFT;
@@ -42,9 +42,9 @@ contract Marketplace is ReentryancyGuard {
     _marketOwner = payable(msg.sender);
   }
 
-  function listNft(address _nftContract, uint256 _tokenId, uint256 _price) public payable nonReentract {
+  function listNft(address _nftContract, uint256 _tokenId, uint256 _price) public payable nonReentrant {
     require(_price > 0, "Price must be at least 1 wei");
-    require(mgs.value == LISTING_FEE, "Not enough ether for listing fee");
+    require(msg.value == LISTING_FEE, "Not enough ether for listing fee");
 
     IERC721(_nftContract).transferFrom(msg.sender, address(this), _tokenId);
 
@@ -76,11 +76,11 @@ contract Marketplace is ReentryancyGuard {
     payable(nft.seller).transfer(msg.value);
     IERC721(_nftContract).transferFrom(address(this), buyer, nft.tokenId);
     _marketOwner.transfer(LISTING_FEE);
-    nft.owner = buyter;
+    nft.owner = buyer;
     nft.listed = false;
 
     _nftsSold.increment();
-    emit NFTSold(_nftContract, nft.tokenId, nft.seller, buyer, msg.value);
+    emit NFTSold(_nftContract, nft.seller, buyer, msg.value, nft.tokenId);
   }
 
   function resellNft(address _nftContract, uint256 _tokenId, uint256 _price) public payable nonReentrant {
