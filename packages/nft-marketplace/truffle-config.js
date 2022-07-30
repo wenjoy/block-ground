@@ -57,7 +57,7 @@ module.exports = {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 8545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
-      maxFeePerGas: 500000000 // The block's base fee per gas is greater than the default max fee per gas
+      maxFeePerGas: 900000000 // The block's base fee per gas is greater than the default max fee per gas
     },
     local_ethereum: {
       network_id: 31337,

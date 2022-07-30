@@ -11,7 +11,7 @@
     "compile:ovm": "truffle compile --config truffle-config.ovm.js",
     "migrate:evm": "truffle migrate",
     "migrate:ovm": "truffle migrate --skip-dry-run --config truffle-config.ovm.js --network $npm_config_network",
-    "migrate:local": "truffle migrate",
+    "migrate:local": "truffle migrate --network development",
     "test:evm": "truffle test",
     "test:ovm": "truffle test --config truffle-config.ovm.js --network $npm_config_network",
     "exec:evm": "truffle exec",
