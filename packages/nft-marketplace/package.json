@@ -10,12 +10,14 @@
     "compile:evm": "truffle compile",
     "compile:ovm": "truffle compile --config truffle-config.ovm.js",
     "migrate:evm": "truffle migrate",
-    "migrate:ovm": "truffle migrate --skip-dry-run --config truffle-config.ovm.js --network $npm_config_network",
+    "migrate:ovm": "truffle migrate --config truffle-config.ovm.js --network optimistic_goerli",
+    "migrate:dashborad": "truffle migrate --config truffle-config.ovm.js --network dashboard",
     "migrate:local": "truffle migrate --network development",
     "test:evm": "truffle test",
     "test:ovm": "truffle test --config truffle-config.ovm.js --network $npm_config_network",
     "exec:evm": "truffle exec",
-    "exec:ovm": "truffle exec $script --config truffle-config.ovm.js --network $npm_config_network"
+    "exec:ovm": "truffle exec $script --config truffle-config.ovm.js --network $npm_config_network",
+    "dashboard": "truffle dashboard" 
   },
   "repository": {
     "type": "git",
