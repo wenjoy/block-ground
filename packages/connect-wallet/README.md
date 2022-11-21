@@ -1,0 +1,1 @@
+ThirdWeb-React: https://github.com/thirdweb-dev/jshttps://github.com/thirdweb-dev/js/tree/main/packages/react
