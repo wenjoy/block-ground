@@ -1,30 +1,30 @@
-import { useRouter } from 'next/router';
-import { ethers } from 'ethers';
-import Web3Modal from 'web3modal'
 import axios from 'axios';
+import { ethers } from 'ethers';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { marketplaceAddress } from '../config';
+import Web3Modal from 'web3modal';
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
+import { marketplaceAddress } from './config';
 
 export default function ResellNFT() {
-  const [formInput, updateFormInput] = useState({price: '', image: ''})
+  const [formInput, updateFormInput] = useState({ price: '', image: '' })
   const router = useRouter()
   const { id, tokenURI } = router.query
-  const { image, price} = formInput
+  const { image, price } = formInput
 
   useEffect(() => {
     fetchNFT()
   }, [id])
 
   async function fetchNFT() {
-    if(!tokenURI) return
+    if (!tokenURI) return
 
     const meta = await axios.get(tokenURI as string)
-    updateFormInput(state => ({...state, image: meta.data.image}))
+    updateFormInput(state => ({ ...state, image: meta.data.image }))
   }
 
   async function listNFTForSale() {
-    if(!price) return
+    if (!price) return
 
     const web3Modal = new Web3Modal()
     const connection = await web3Modal.connect()
@@ -33,10 +33,10 @@ export default function ResellNFT() {
     const priceFormatted = ethers.utils.parseUnits(price, 'ether')
     let contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer)
     let listingPrice = await contract.getListingPrice()
-    
+
     listingPrice = listingPrice.toString()
 
-    let transcation = await contract.resellToken(id, priceFormatted, {value: listingPrice})
+    let transcation = await contract.resellToken(id, priceFormatted, { value: listingPrice })
 
     await transcation.wait()
 
@@ -47,10 +47,10 @@ export default function ResellNFT() {
     <div className="felx justify-center">
       <div className="w-1/2 flex flex-col pb-12">
         <input
-        placeholder='Asset Price in Eth'
-        className = 'mt-2 border rounded p-4'
-        onChange={e => updateFormInput({...formInput, price: e.target.value})}
-        type="text"/>
+          placeholder='Asset Price in Eth'
+          className='mt-2 border rounded p-4'
+          onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
+          type="text" />
         {
           image && <img src={image} className="rounded mt-4" alt="" />
         }

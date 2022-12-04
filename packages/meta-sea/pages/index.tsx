@@ -1,12 +1,13 @@
-import { ethers } from 'ethers'
 import axios from 'axios'
-import Web3Modal from 'web3modal'
+import { ethers } from 'ethers'
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
+import Web3Modal from 'web3modal'
 
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
-import { marketplaceAddress } from '../config';
+import { marketplaceAddress } from './config'
 
+console.log('debug', marketplaceAddress);
 const Home: NextPage = () => {
   const [nfts, setNfts] = useState<any[]>([])
   const [loadingState, setLoadingState] = useState('not-loading')
@@ -17,10 +18,11 @@ const Home: NextPage = () => {
 
   async function loadNFTs() {
     const provider = new ethers.providers.JsonRpcProvider()
+
     const contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, provider)
     const data = await contract.fetchMarketItems()
     console.log('data', data);
-    
+
     const items = await Promise.all(data.map(async (item: any) => {
       const tokenUri = await contract.tokenURI(item.tokenId)
       const meta = await axios.get(tokenUri)

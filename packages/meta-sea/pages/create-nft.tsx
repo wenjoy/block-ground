@@ -1,11 +1,11 @@
+import { ethers } from 'ethers';
+import { create as ipfsHttpClient } from 'ipfs-http-client';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Web3Modal from 'web3modal';
-import { ethers } from 'ethers';
-import { create as ipfsHttpClient } from 'ipfs-http-client';
 
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
-import { marketplaceAddress } from '../config';
+import { marketplaceAddress } from './config';
 
 const client = ipfsHttpClient({ url: 'https://ipfs.infura.io:5001/api/v0' })
 
@@ -52,7 +52,7 @@ export default function CreateItem() {
   async function listNFTForSale() {
     const url = await uploadToIPFS()
     const web3Modal = new Web3Modal()
-    
+
     const connection = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
@@ -85,7 +85,7 @@ export default function CreateItem() {
         <input type="file" name='Asset' onChange={onChange} className="my-4" />
         {
           fileUrl && (
-            <img src={fileUrl} alt="file url"  className="rounded" />
+            <img src={fileUrl} alt="file url" className="rounded" />
           )
         }
         <button onClick={listNFTForSale} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">Create NFT</button>

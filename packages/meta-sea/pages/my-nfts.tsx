@@ -1,13 +1,13 @@
+import axios from 'axios';
+import { ethers } from 'ethers';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
-import axios from 'axios';
-import Web3Modal from 'web3modal'
-import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
-import { marketplaceAddress } from '../config';
+import Web3Modal from 'web3modal';
+import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
+import { marketplaceAddress } from './config';
 
 export default function MyAssets() {
-  const [nfts, setNfts] = useState<any []>([])
+  const [nfts, setNfts] = useState<any[]>([])
   const [loadingState, setLoadingState] = useState('not-loading')
   const router = useRouter()
 
@@ -27,7 +27,7 @@ export default function MyAssets() {
     const marketplaceContract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer)
     const data = await marketplaceContract.fetchMyNFTs()
 
-    const items = await Promise.all(data.map(async (i:any) => {
+    const items = await Promise.all(data.map(async (i: any) => {
       const tokenURI = await marketplaceContract.tokenURI(i.tokenId)
       const meta = await axios.get(tokenURI)
       let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
@@ -45,11 +45,11 @@ export default function MyAssets() {
     setLoadingState('loaded')
   }
 
-  function listNFT(nft:any) {
+  function listNFT(nft: any) {
     router.push(`/resell-nft?id=${nft.tokenId}&tokenURI=${nft.tokenURI}`)
   }
 
-  if(loadingState === 'loaded' && nfts.length === 0) return <h1 className="py-10 px-20 text-3xl">No NFTs owned</h1>
+  if (loadingState === 'loaded' && nfts.length === 0) return <h1 className="py-10 px-20 text-3xl">No NFTs owned</h1>
 
   return (
     <div className='flex justify-center'>
