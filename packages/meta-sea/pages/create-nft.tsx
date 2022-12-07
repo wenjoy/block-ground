@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { create as ipfsHttpClient } from 'ipfs-http-client';
+import { create } from 'ipfs-http-client';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Web3Modal from 'web3modal';
@@ -7,7 +7,7 @@ import Web3Modal from 'web3modal';
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
 import { marketplaceAddress } from './config';
 
-const client = ipfsHttpClient({ url: 'https://ipfs.infura.io:5001/api/v0' })
+const client = create({ url: "http://127.0.0.1:5002/api/v0" })
 
 export default function CreateItem() {
   const [fileUrl, setFileUrl] = useState('')
@@ -26,7 +26,9 @@ export default function CreateItem() {
           progress: (prog: number) => console.log(`received: ${prog}`)
         }
       )
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      console.log('added', added);
+
+      const url = `http://localhost:9090/ipfs/${added.path}`
       setFileUrl(url)
     } catch (error) {
       console.log('Error uploading file: ', error);
@@ -42,7 +44,7 @@ export default function CreateItem() {
 
     try {
       const added = await client.add(data)
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      const url = `http://localhost:9090/ipfs/${added.path}`
       return url
     } catch (error) {
       console.log('Error uploading file: ', error);
@@ -51,12 +53,11 @@ export default function CreateItem() {
 
   async function listNFTForSale() {
     const url = await uploadToIPFS()
-    const web3Modal = new Web3Modal()
 
+    const web3Modal = new Web3Modal()
     const connection = await web3Modal.connect()
     const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
-
     const price = ethers.utils.parseUnits(formInput.price, 'ether')
     let contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer)
     let listingPrice = await contract.getListingPrice()

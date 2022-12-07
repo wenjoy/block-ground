@@ -7,7 +7,6 @@ import Web3Modal from 'web3modal'
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
 import { marketplaceAddress } from './config'
 
-console.log('debug', marketplaceAddress);
 const Home: NextPage = () => {
   const [nfts, setNfts] = useState<any[]>([])
   const [loadingState, setLoadingState] = useState('not-loading')
@@ -21,7 +20,7 @@ const Home: NextPage = () => {
 
     const contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, provider)
     const data = await contract.fetchMarketItems()
-    console.log('data', data);
+    console.log('data', data, contract, NFTMarketplace);
 
     const items = await Promise.all(data.map(async (item: any) => {
       const tokenUri = await contract.tokenURI(item.tokenId)
