@@ -10,20 +10,48 @@ import { marketplaceAddress } from './config'
 const Home: NextPage = () => {
   const [nfts, setNfts] = useState<any[]>([])
   const [loadingState, setLoadingState] = useState('not-loading')
+  console.log('index-13-nfts', nfts)
 
   useEffect(() => {
     loadNFTs()
   }, [])
+
+  // async function testProvider() {
+  //   try {
+  //     const p = window.getProvider()
+  //     const provider = new ethers.providers.Web3Provider(p)
+
+  //     const signer = provider.getSigner()
+  //     const price = ethers.utils.parseUnits('1', 'ether')
+  //     console.log('index-24', price)
+  //     let contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer)
+  //     console.log('index-26-contract', contract)
+  //     let listingPrice = await contract.getListingPrice()
+  //     console.log('index-28', listingPrice)
+
+  //     listingPrice = listingPrice.toString()
+  //     const url = 'http://image.com'
+  //     let transaction = await contract.createToken(url, price, { value: listingPrice })
+  //     console.log('index-33-transaction', transaction)
+  //     const result = await transaction.wait()
+  //     console.log('index-36-result', result)
+  //   } catch (err) {
+  //     console.error('Test error: ', err);
+
+  //   }
+  // }
 
   async function loadNFTs() {
     const provider = new ethers.providers.JsonRpcProvider()
 
     const contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, provider)
     const data = await contract.fetchMarketItems()
-    console.log('data', data, contract, NFTMarketplace);
+    console.log('index-49-data', data)
 
     const items = await Promise.all(data.map(async (item: any) => {
       const tokenUri = await contract.tokenURI(item.tokenId)
+      console.log('index-52-tokenUri', tokenUri)
+
       const meta = await axios.get(tokenUri)
       let price = ethers.utils.formatUnits(item.price.toString(), 'ether')
       return {
