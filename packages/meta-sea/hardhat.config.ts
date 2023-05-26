@@ -9,6 +9,11 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 1337,
     }
+  },
+  namedAccounts: {
+    deployer: {
+      default: 0, // here this will by default take the first account as deployer
+    },
   }
 };
 
