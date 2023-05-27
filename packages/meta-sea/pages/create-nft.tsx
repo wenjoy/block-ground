@@ -2,6 +2,7 @@ import { ethers } from 'ethers';
 import { create } from 'ipfs-http-client';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import Web3Modal from 'web3modal';
 
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
 import { marketplaceAddress } from './config';
@@ -53,13 +54,19 @@ export default function CreateItem() {
   async function listNFTForSale() {
     const url = await uploadToIPFS()
 
-    const provider = await window.getProvider()
-    const pp = ethers.getDefaultProvider('goerli')
-    console.log('pp', pp);
-    const p = new ethers.providers.Web3Provider(provider)
-    console.log('kkkk', p);
+    // use my own wallet
+    // const provider = await window.getProvider()
+    // const pp = ethers.getDefaultProvider('goerli')
+    // console.log('pp', pp);
+    // const p = new ethers.providers.Web3Provider(provider)
+    // console.log('kkkk', p);
 
+    const web3Modal = new Web3Modal({})
+    const connection = await web3Modal.connect()
+    const provider = new ethers.providers.Web3Provider(connection)
     const signer = provider.getSigner()
+    const nonce = await signer.getTransactionCount()
+    console.log('create-nft-72', nonce)
     const price = ethers.utils.parseUnits(formInput.price, 'ether')
     let contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer)
     let listingPrice = await contract.getListingPrice()
