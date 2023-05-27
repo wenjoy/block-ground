@@ -52,13 +52,14 @@ export default function MyAssets() {
   if (loadingState === 'loaded' && nfts.length === 0) return <h1 className="py-10 px-20 text-3xl">No NFTs owned</h1>
 
   return (
-    <div className='flex justify-center'>
+    <div className='flex justify-start'>
       <div className="p-4">
+        <h1>My Assets</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
           {
             nfts.map((nft, i) => (
-              <div key={i} className="border shadow rounded-xl overflow-hidden">
-                <img src={nft.image} className="rounded" alt="" />
+              <div key={i} className="border shadow rounded-xl overflow-hidden h-96 flex flex-col justify-between">
+                <img src={nft.image} className="h-44 rounded" alt="" />
                 <div className="p-4 bg-black">
                   <p className="text-2xl font-bold text-white">Price - {nft.price} Eth</p>
                   <button className='mt-4 w-full bg-pink-500 text-white font-bold py-2 px-12 rounded' onClick={() => listNFT(nft)}>List</button>
@@ -68,7 +69,6 @@ export default function MyAssets() {
           }
         </div>
       </div>
-      <h1>My Assets</h1>
     </div>
   );
 }

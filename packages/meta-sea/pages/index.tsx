@@ -87,15 +87,15 @@ const Home: NextPage = () => {
   )
 
   return (
-    <div className='flex justify-center'>
+    <div className='flex justify-start'>
       <div className='px-4'>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'>
           {
             nfts.map((nft: any, i: number) => (
-              <div className='border shadow rounded-xl overflow-hidden' key={i}>
-                <img src={nft.image} alt="image" />
+              <div className='border shadow rounded-xl overflow-hidden h-96 flex flex-col justify-between' key={i}>
+                <img className='h-44' src={nft.image} alt="image" />
                 <div className="p-4">
-                  <p className="text-2xl font-semibold h-64">{nft.name}</p>
+                  <p className="text-2xl font-semibold">{nft.name}</p>
                   <div className='h-70 overflow-hidden'>
                     <p className="text-gray-400">{nft.description}</p>
                   </div>

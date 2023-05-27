@@ -44,18 +44,20 @@ export default function CreateDashboard() {
   if (loadingState === 'loaded' && !nfts.length) return <h1 className='py-10 px-20 text-3xl'>No NFTs listed</h1>
 
   return (
-    <div className='p-4'>
-      <h2 className="text-2xl py-2">Items Listed</h2>
-      {
-        nfts.map((nft, i) => (
-          <div className="border shadow rounded-xl overflow-hidden" key={i}>
-            <img src={nft.image} alt='' className='rounded' />
-            <div className="p-4 b-black">
-              <p className="text-2xl font-bold text-white">Price - {nft.price} Eth</p>
+    <>
+      <h2 className="text-2xl py-2 p-4">Items Listed</h2>
+      <div className='p-4 flex justify-start'>
+        {
+          nfts.map((nft, i) => (
+            <div className="border shadow rounded-xl overflow-hidden h-44 flex flex-col justify-between" key={i}>
+              <img src={nft.image} alt='' className='h-44 rounded' />
+              <div className="p-4 b-black">
+                <p className="text-2xl font-bold text-white">Price - {nft.price} Eth</p>
+              </div>
             </div>
-          </div>
-        ))
-      }
-    </div>
+          ))
+        }
+      </div>
+    </>
   )
 }
